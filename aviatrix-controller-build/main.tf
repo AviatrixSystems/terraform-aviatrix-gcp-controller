@@ -50,11 +50,3 @@ resource "google_compute_address" "ip_address" {
   name = "aviatrix-controller-address"
   address_type = "EXTERNAL"
 }
-
-output "public_ip" {
-  value = google_compute_instance.controller.network_interface[0].access_config[0].nat_ip
-}
-
-output "private_ip" {
-  value = google_compute_instance.controller.network_interface[0].network_ip
-}
