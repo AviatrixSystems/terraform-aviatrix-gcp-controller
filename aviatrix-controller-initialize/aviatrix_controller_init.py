@@ -824,7 +824,7 @@ def cli(parser):
 
 if __name__ == "__main__":
     logging.basicConfig(
-        format="%(asctime)s aviatrix-azure-function--- %(message)s", level=logging.INFO
+        format="%(asctime)s aviatrix-gcloud-function--- %(message)s", level=logging.INFO
     )
 
     parser = argparse.ArgumentParser(description="Initialize Google Cloud Controller")
