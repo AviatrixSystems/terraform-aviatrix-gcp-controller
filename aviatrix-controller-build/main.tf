@@ -1,5 +1,5 @@
-resource "google_compute_image" "i" {
-  count = var.aviatrix_controller_image == "" ? 1 : 0
+resource "google_compute_image" "controller_image" {
+  count = var.image == "" ? 1 : 0
   name = "aviatrix-controller-image"
 
   raw_disk {
@@ -8,12 +8,12 @@ resource "google_compute_image" "i" {
 }
 
 resource "google_compute_instance" "controller" {
-  name = "aviatrix-controller"
+  name = var.controller_name
   machine_type = "e2-standard-2"
 
   boot_disk {
     initialize_params {
-      image = var.aviatrix_controller_image == "" ? google_compute_image.i[0].self_link : var.aviatrix_controller_image
+      image = var.image == "" ? google_compute_image.controller_image[0].self_link : var.image
     }
   }
 
@@ -22,21 +22,21 @@ resource "google_compute_instance" "controller" {
   }
 
   network_interface {
-    network = var.aviatrix_controller_network == "" ? google_compute_network.controller_network[0].self_link : var.aviatrix_controller_network
+    network = var.network == "" ? google_compute_network.controller_network[0].self_link : var.network
 
     access_config {
-      nat_ip = google_compute_address.ip_address.address
+      nat_ip = var.public_ip == "" ? google_compute_address.ip_address[0].address : var.public_ip
     }
   }
 }
 
 resource "google_compute_network" "controller_network" {
-  count = var.aviatrix_controller_network == "" ? 1 : 0
+  count = var.network == "" ? 1 : 0
   name = "aviatrix-controller-network"
 }
 
 resource "google_compute_firewall" "controller_firewall" {
-  count = var.aviatrix_controller_network == "" ? 1 : 0
+  count = var.network == "" ? 1 : 0
   name = "aviatrix-controller-firewall"
   network = google_compute_network.controller_network[0].self_link
 
@@ -47,6 +47,8 @@ resource "google_compute_firewall" "controller_firewall" {
 }
 
 resource "google_compute_address" "ip_address" {
+  count = var.public_ip == "" ? 1 : 0
+
   name = "aviatrix-controller-address"
   address_type = "EXTERNAL"
 }

@@ -47,8 +47,9 @@ provider "google" {
 }
 
 module "aviatrix_controller_build" {
-  source          = "./aviatrix_controller_build"
-  // please do not use special characters such as `\/"[]:|<>+=;,?*@&~!#$%^()_{}'` in the controller_name
+  source          = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
+  
+  // please only use lower case letters, numbers and hyphens in the controller_name
   controller_name = "<< your Aviatrix Controller name >>"
 }
 
@@ -79,7 +80,7 @@ provider "google" {
 }
 
 module "aviatrix_controller_initialize" {
-  source                              = "./aviatrix_controller_initialize"
+  source                              = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-initialize"
   avx_controller_public_ip            = "<< public ip address of the Aviatrix Controller >>"
   avx_controller_private_ip           = "<< private ip address of the Aviatrix Controller >>"
   avx_controller_admin_email          = "<< your admin email address for the Aviatrix Controller >>"
@@ -109,13 +110,13 @@ provider "google" {
 }
 
 module "aviatrix_controller_build" {
-  source          = "./aviatrix_controller_build"
-  // please do not use special characters such as `\/"[]:|<>+=;,?*@&~!#$%^()_{}'` in the controller_name
+  source          = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
+  // please only use lower case letters, numbers and hyphens in the controller_name
   controller_name = "<< your Aviatrix Controller name >>"
 }
 
 module "aviatrix_controller_initialize" {
-  source                              = "./aviatrix_controller_initialize"
+  source                              = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-initialize"
   avx_controller_public_ip            = module.aviatrix-controller-build.aviatrix_controller_public_ip
   avx_controller_private_ip           = module.aviatrix-controller-build.aviatrix_controller_private_ip
   avx_controller_admin_email          = "<< your admin email address for the Aviatrix Controller >>"
