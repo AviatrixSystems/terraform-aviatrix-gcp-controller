@@ -28,6 +28,12 @@ variable "access_account_name" {
   description = "aviatirx controller access account name"
 }
 
+variable "controller_version" {
+  type        = string
+  description = "Aviatrix Controller version"
+  default     = "latest"
+}
+
 variable "aviatrix_customer_id" {
   type        = string
   description = "aviatrix customer license id"
