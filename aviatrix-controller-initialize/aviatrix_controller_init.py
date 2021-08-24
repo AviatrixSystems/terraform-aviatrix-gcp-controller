@@ -840,7 +840,7 @@ if __name__ == "__main__":
         "aviatrix_api_route": "api",
         "admin_email": args.admin_email,
         "new_admin_password": args.admin_password,
-        "controller_init_version": "latest",
+        "controller_init_version": args.controller_version,
         "gcloud_project_credentials_file": gcloud_project_credentials_file,
         "aviatrix_customer_id": args.aviatrix_customer_id,
         "access_account_name": args.access_account_name,

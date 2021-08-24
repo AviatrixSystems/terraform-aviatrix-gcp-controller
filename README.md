@@ -88,6 +88,7 @@ module "aviatrix_controller_initialize" {
   gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
   access_account_name                 = "<< your account name mapping to your GCloud account >>"
   aviatrix_customer_id                = "<< your customer license id >>"
+  controller_version                  = "<< desired controller version. defaults to 'latest' >>"
 }
 ```
 *Execute*
@@ -123,6 +124,7 @@ module "aviatrix_controller_initialize" {
   gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
   access_account_name                 = "<< your account name mapping to your GCloud account >>"
   aviatrix_customer_id                = "<< your customer license id >>"
+  controller_version                  = "<< desired controller version. defaults to 'latest' >>"
 }
 
 output "avx_controller_public_ip" {
