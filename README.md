@@ -54,11 +54,11 @@ module "aviatrix_controller_build" {
 }
 
 output "avx_controller_public_ip" {
-  value = module.aviatrix_controller_build.aviatrix_controller_public_ip_address
+  value = module.aviatrix_controller_build.public_ip
 }
 
 output "avx_controller_private_ip" {
-  value = module.aviatrix_controller_build.aviatrix_controller_private_ip_address
+  value = module.aviatrix_controller_build.private_ip
 }
 ```
 *Execute*
@@ -88,7 +88,7 @@ module "aviatrix_controller_initialize" {
   gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
   access_account_name                 = "<< your account name mapping to your GCloud account >>"
   aviatrix_customer_id                = "<< your customer license id >>"
-  terraform_module_path               = "<< absolute path of this terraform module >>"
+  controller_version                  = "<< desired controller version. defaults to 'latest' >>"
 }
 ```
 *Execute*
@@ -117,18 +117,18 @@ module "aviatrix_controller_build" {
 
 module "aviatrix_controller_initialize" {
   source                              = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-initialize"
-  avx_controller_public_ip            = module.aviatrix-controller-build.aviatrix_controller_public_ip
-  avx_controller_private_ip           = module.aviatrix-controller-build.aviatrix_controller_private_ip
+  avx_controller_public_ip            = module.aviatrix-controller-build.public_ip
+  avx_controller_private_ip           = module.aviatrix-controller-build.private_ip
   avx_controller_admin_email          = "<< your admin email address for the Aviatrix Controller >>"
   avx_controller_admin_password       = "<< your admin password for the Aviatrix Controller >>"
   gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
   access_account_name                 = "<< your account name mapping to your GCloud account >>"
   aviatrix_customer_id                = "<< your customer license id >>"
-  terraform_module_path               = "<< absolute path of this terraform module >>"
+  controller_version                  = "<< desired controller version. defaults to 'latest' >>"
 }
 
 output "avx_controller_public_ip" {
-  value = module.aviatrix_controller_build.aviatrix_controller_public_ip_address
+  value = module.aviatrix_controller_build.public_ip
 }
 ```
 *Execute*

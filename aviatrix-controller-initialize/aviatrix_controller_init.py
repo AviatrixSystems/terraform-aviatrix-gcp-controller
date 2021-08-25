@@ -820,6 +820,7 @@ def cli(parser):
     parser.add_argument("--gcloud_project_credentials_filepath", required=True, help="Filepath to the Google Cloud project credentials")
     parser.add_argument("--access_account_name", required=True, help="The name of the access account")
     parser.add_argument("--aviatrix_customer_id", required=True, help="The Aviatrix Customer ID")
+    parser.add_argument("--controller_version", required=True, help="The version to initialize the Aviatrix Controller to")
 
 
 if __name__ == "__main__":
@@ -839,7 +840,7 @@ if __name__ == "__main__":
         "aviatrix_api_route": "api",
         "admin_email": args.admin_email,
         "new_admin_password": args.admin_password,
-        "controller_init_version": "latest",
+        "controller_init_version": args.controller_version,
         "gcloud_project_credentials_file": gcloud_project_credentials_file,
         "aviatrix_customer_id": args.aviatrix_customer_id,
         "access_account_name": args.access_account_name,
