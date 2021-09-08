@@ -9,7 +9,7 @@ resource "google_compute_image" "controller_image" {
 
 resource "google_compute_instance" "controller" {
   name = var.controller_name
-  machine_type = "e2-standard-2"
+  machine_type = var.controller_machine_type
 
   boot_disk {
     initialize_params {
@@ -18,7 +18,8 @@ resource "google_compute_instance" "controller" {
   }
 
   service_account {
-    scopes = ["cloud-platform"]
+    email = var.service_account_email
+    scopes = var.service_account_scopes
   }
 
   network_interface {
