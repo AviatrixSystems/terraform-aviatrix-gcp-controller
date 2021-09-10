@@ -53,7 +53,17 @@ module "aviatrix-controller-build" {
 
   Name of controller that will be launched. If not set, default name will be used.
 
+- **service_account_email**
 
+  Email of a service account to attach to the Aviatrix Controller instance. If not set, no service account will be attached.
+
+- **service_account_scopes**
+
+  List of scopes to assign to the service account. If not set, defaults to ["cloud-platform"].
+
+- **controller_machine_type**
+
+  The machine type to create the Aviatrix Controller. If not set, defaults to "e2-standard-2".
 ### Outputs
 
 - **private_ip**

@@ -29,13 +29,54 @@ In order to run the `aviatrix_controller_init.py` python script, dependencies li
  pip install -r requirements.txt
 ```
 
-### 2. Authenticating to Google Cloud using the GCloud CLI in the terminal
+### 2. Authenticating to Google Cloud
+#### 2a. Using the Gcloud CLI in the terminal
+The easiest way to authenticate is to run:
 ``` shell
 gcloud auth application-default login
 ```
 This command will open the default browser and load Google Cloud sign in page
 
-### 3. Build the Controller VM on Google Cloud
+#### 2b. Using a Service Account 
+Alternatively, a Google Cloud Service Account can be used with Terraform to authenticate. Download the JSON key file from an existing Service Account or from a newly created one. Supply the key to Terraform using the `GOOGLE_APPLICATION_CREDENTIALS` environment variable.
+```shell
+export GOOGLE_APPLICATION_CREDENTIALS={{path to key file}}
+```
+More information about using a Service Account to authenticate can be found in the Google Terraform documentation [here](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/getting_started#adding-credentials).
+
+### 3. Enabling Google Compute Engine API
+The Google Compute Engine API must be enabled in order to create the Aviatrix Controller.
+
+#### 3a. Using the Google Console
+To enable the Google Compute Engine API using the Google Console:
+1. Go to the [Google Compute Engine API page](https://console.cloud.google.com/apis/library/compute.googleapis.com?project=_)
+2. From the projects list, select the project you want to use.
+3. On the API page, click ENABLE.
+
+More detailed information about enabling APIs can be found in Google's Cloud API documentation [here](https://cloud.google.com/apis/docs/getting-started#enabling_apis).
+
+#### 3b. Using Terraform
+Alternatively, the Google Compute Engine API can be enabled using Terraform. Using the `google_project_service` resource to enable an API requires [Service Usage API](https://console.cloud.google.com/apis/library/serviceusage.googleapis.com?project=_) to be enabled.
+
+**enable_api.tf**
+```hcl
+provider "google" {
+  project = "<< project id >>"
+  region  = "<< GCloud region to launch resources >>"
+  zone    = "<< GCloud zone to launch resources >>"
+}
+
+resource google_project_service "compute_service" {
+  service = "compute.googleapis.com"
+}
+```
+*Execute*
+```shell
+terraform init
+terraform apply
+```
+
+### 4. Build the Controller VM on Google Cloud
 
 **build_controller.tf**
 ```
@@ -68,7 +109,7 @@ terraform init
 terraform apply
 cd ..
 ```
-### 4. Initialize the Controller
+### 5. Initialize the Controller
 
 **controller_init.tf**
 ```
