@@ -46,7 +46,7 @@ resource "google_compute_subnetwork" "controller_subnet" {
 
 resource "google_compute_firewall" "controller_firewall" {
   name = "aviatrix-controller-firewall"
-  network = google_compute_subnetwork.controller_subnet[0].self_link
+  network = google_compute_network.controller_network[0].self_link
 
   source_ranges = var.incoming_ssl_cidrs
 
