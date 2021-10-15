@@ -18,28 +18,35 @@ This Terraform module will create any of these optional components if they are n
 
 To create an Aviatrix Controller from scratch:
 
-```
+```hcl
 module "aviatrix-controller-build" {
   source = "github.com/AviatrixSysmtes/terraform-module-gcp.git//aviatrix-controller-build"
+  subnet_cidr = "10.128.0.0/9"
+  incoming_ssl_cidrs = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
 }
 ```
 
 
 To create an Aviatrix Controller with existing components:
-```
+```hcl
 module "aviatrix-controller-build" {
   source    = "github.com/AviatrixSysmtes/terraform-module-gcp.git//aviatrix-controller-build"
-  network   = "<<< insert network name or self_link here  >>>"
+  subnetwork   = "<<< insert subnetwork name or self_link here  >>>"
   image     = "<<< insert image name or self_link here >>>"
   public_ip = "<<< insert IP address here, ie. 1.1.1.1>>>"
+  incoming_ssl_cidrs = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
 }
 ```
 
 ### Variables
 
-- **network**
+- **subnetwork**
 
-  The name or self_link of the existing Google compute network. If not set, a Google compute network will be created.
+  The name or self_link of the existing Google compute subnetwork. If not set, a Google compute subnetwork will be created.
+
+- **subnet_cidr**
+
+  The CIDR for the Google subnetwork that will be created. Must be empty if **subunetwork** is set. Default value is "10.128.0.0/9".
 
 - **image**
 
@@ -64,6 +71,11 @@ module "aviatrix-controller-build" {
 - **controller_machine_type**
 
   The machine type to create the Aviatrix Controller. If not set, defaults to "e2-standard-2".
+
+- **incoming_ssl_cidrs**
+
+  List of CIDRs allowed for HTTPS access to the Aviatrix Controller
+
 ### Outputs
 
 - **private_ip**

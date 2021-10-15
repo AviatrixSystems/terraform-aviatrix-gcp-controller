@@ -69,6 +69,15 @@ provider "google" {
 resource google_project_service "compute_service" {
   service = "compute.googleapis.com"
 }
+
+terraform {
+  required_providers{
+    google {
+      source = "hashicorp/google"
+      version = "<< Google Terraform provider version >>"
+    }
+  }
+}
 ```
 *Execute*
 ```shell
@@ -79,19 +88,19 @@ terraform apply
 ### 4. Build the Controller VM on Google Cloud
 
 **build_controller.tf**
-```
+```hcl
 provider "google" {
-  version = "<< terraform version >>"
   project = "<< project id >>"
   region  = "<< GCloud region to launch resources >>"
   zone    = "<< GCloud zone to launch resources >>"
 }
 
 module "aviatrix_controller_build" {
-  source          = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
-  
+  source             = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
+  incoming_ssl_cidrs = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
+  subnet_cidr        = "10.128.0.0/9"
   // please only use lower case letters, numbers and hyphens in the controller_name
-  controller_name = "<< your Aviatrix Controller name >>"
+  controller_name    = "<< your Aviatrix Controller name >>"
 }
 
 output "avx_controller_public_ip" {
@@ -100,6 +109,15 @@ output "avx_controller_public_ip" {
 
 output "avx_controller_private_ip" {
   value = module.aviatrix_controller_build.private_ip
+}
+
+terraform {
+  required_providers{
+    google {
+      source = "hashicorp/google"
+      version = "<< Google Terraform provider version >>"
+    }
+  }
 }
 ```
 *Execute*
@@ -112,9 +130,8 @@ cd ..
 ### 5. Initialize the Controller
 
 **controller_init.tf**
-```
+```hcl
 provider "google" {
-  version = "<< terraform version >>"
   project = "<< project id >>"
   region  = "<< GCloud region to launch resources >>"
   zone    = "<< GCloud zone to launch resources >>"
@@ -131,6 +148,15 @@ module "aviatrix_controller_initialize" {
   aviatrix_customer_id                = "<< your customer license id >>"
   controller_version                  = "<< desired controller version. defaults to 'latest' >>"
 }
+
+terraform {
+  required_providers{
+    google {
+      source = "hashicorp/google"
+      version = "<< Google Terraform provider version >>"
+    }
+  }
+}
 ```
 *Execute*
 ```shell
@@ -142,18 +168,19 @@ cd ..
 
 ### Putting it all together
 The controller buildup and initialization can be done using a single terraform file.
-```
+```hcl
 provider "google" {
-  version = "<< terraform version >>"
   project = "<< project id >>"
   region  = "<< GCloud region to launch resources >>"
   zone    = "<< GCloud zone to launch resources >>"
 }
 
 module "aviatrix_controller_build" {
-  source          = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
+  source             = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
+  incoming_ssl_cidrs = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
+  subnet_cidr        = "10.128.0.0/9"
   // please only use lower case letters, numbers and hyphens in the controller_name
-  controller_name = "<< your Aviatrix Controller name >>"
+  controller_name    = "<< your Aviatrix Controller name >>"
 }
 
 module "aviatrix_controller_initialize" {
@@ -170,6 +197,15 @@ module "aviatrix_controller_initialize" {
 
 output "avx_controller_public_ip" {
   value = module.aviatrix_controller_build.public_ip
+}
+
+terraform {
+  required_providers{
+    google {
+      source = "hashicorp/google"
+      version = "<< Google Terraform provider version >>"
+    }
+  }
 }
 ```
 *Execute*
