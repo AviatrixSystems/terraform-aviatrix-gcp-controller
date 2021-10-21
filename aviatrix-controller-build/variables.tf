@@ -4,6 +4,12 @@ variable "image" {
   default = ""
 }
 
+variable "network" {
+  type = string
+  description = "The network to attach to the Aviatrix Controller"
+  default = ""
+}
+
 variable "subnetwork" {
   type = string
   description = "The subnetwork to attach the Aviatrix Controller"
