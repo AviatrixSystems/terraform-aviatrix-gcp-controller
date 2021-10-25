@@ -23,7 +23,8 @@ resource "google_compute_instance" "controller" {
   }
 
   network_interface {
-    subnetwork = var.subnetwork == "" ? google_compute_subnetwork.controller_subnet[0].self_link : var.subnetwork
+    network = var.network
+    subnetwork = var.network == "" ? google_compute_subnetwork.controller_subnet[0].self_link : var.subnetwork
 
     access_config {
       nat_ip = var.public_ip == "" ? google_compute_address.ip_address[0].address : var.public_ip
@@ -32,13 +33,13 @@ resource "google_compute_instance" "controller" {
 }
 
 resource "google_compute_network" "controller_network" {
-  count = var.subnetwork == "" ? 1 : 0
+  count = var.network == "" ? 1 : 0
   name = "aviatrix-controller-network"
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "controller_subnet" {
-  count = var.subnetwork == "" ? 1 : 0
+  count = var.network == "" ? 1 : 0
   name = "aviatrix-controller-subnetwork"
   network = google_compute_network.controller_network[0].self_link
   ip_cidr_range = var.subnet_cidr
@@ -46,7 +47,7 @@ resource "google_compute_subnetwork" "controller_subnet" {
 
 resource "google_compute_firewall" "controller_firewall" {
   name = "aviatrix-controller-firewall"
-  network = google_compute_network.controller_network[0].self_link
+  network = var.network == "" ? google_compute_network.controller_network[0].self_link : var.network
 
   source_ranges = var.incoming_ssl_cidrs
 

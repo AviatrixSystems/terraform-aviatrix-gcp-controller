@@ -73,7 +73,7 @@ resource google_project_service "compute_service" {
 terraform {
   required_providers{
     google {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "<< Google Terraform provider version >>"
     }
   }
