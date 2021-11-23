@@ -1,19 +1,10 @@
-resource "google_compute_image" "controller_image" {
-  count = var.image == "" ? 1 : 0
-  name = "aviatrix-controller-image"
-
-  raw_disk {
-    source = "https://storage.googleapis.com/aviatrix300/aviatrix-cloud-services-gateway-032020-byol.tar.gz"
-  }
-}
-
 resource "google_compute_instance" "controller" {
   name = var.controller_name
   machine_type = var.controller_machine_type
 
   boot_disk {
     initialize_params {
-      image = var.image == "" ? google_compute_image.controller_image[0].self_link : var.image
+      image = "aviatrix-public/avx-controller-gcp-2021-05-05"
     }
   }
 
