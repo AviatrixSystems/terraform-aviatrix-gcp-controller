@@ -41,39 +41,39 @@ module "aviatrix-controller-build" {
 
 - **network**
 
-  The name or self_link of an existing Google Compute Network. If not set, a Google Compute Network and Subnetwork with cidr "10.128.0.0/9" will be created.
+The name or self_link of an existing Google Compute Network. If not set, a Google Compute Network and Subnetwork with cidr "10.128.0.0/9" will be created.
 
 - **subnetwork**
 
-  The name or self_link of an existing Google Compute Subnetwork of the given **network**. **subnetwork** must be empty if **network** is not provided.
+The name or self_link of an existing Google Compute Subnetwork of the given **network**. **subnetwork** must be empty if **network** is not provided.
 
 - **subnet_cidr**
 
-  The CIDR for the Google Subnetwork that will be created. Must be empty if **network** is set. Default value is "10.128.0.0/9".
+The CIDR for the Google Subnetwork that will be created. Must be empty if **network** is set. Default value is "10.128.0.0/9".
 
 - **public_ip**
 
-  Existing public IP Address to assign to the Aviatrix Controller. If not set, a Google Compute public IP address will be created.
+Existing public IP Address to assign to the Aviatrix Controller. If not set, a Google Compute public IP address will be created.
 
 - **controller_name**
 
-  Name of controller that will be launched. If not set, default name will be used.
+Name of controller that will be launched. If not set, default name will be used.
 
 - **service_account_email**
 
-  Email of a service account to attach to the Aviatrix Controller instance. If not set, no service account will be attached.
+Email of a service account to attach to the Aviatrix Controller instance. If not set, no service account will be attached.
 
 - **service_account_scopes**
 
-  List of scopes to assign to the service account. If not set, defaults to ["cloud-platform"].
+List of scopes to assign to the service account. If not set, defaults to ["cloud-platform"].
 
 - **controller_machine_type**
 
-  The machine type to create the Aviatrix Controller. If not set, defaults to "e2-standard-2".
+The machine type to create the Aviatrix Controller. If not set, defaults to "e2-standard-2".
 
 - **incoming_ssl_cidrs**
 
-  List of CIDRs allowed for HTTPS access to the Aviatrix Controller.
+List of CIDRs allowed for HTTPS access to the Aviatrix Controller.
 
 ### Outputs
 
