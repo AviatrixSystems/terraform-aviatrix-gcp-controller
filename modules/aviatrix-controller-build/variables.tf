@@ -1,19 +1,12 @@
 variable "network" {
   type = string
   description = "The network to attach to the Aviatrix Controller"
-  default = ""
 }
 
 variable "subnetwork" {
   type = string
   description = "The subnetwork to attach the Aviatrix Controller"
   default = ""
-}
-
-variable "subnet_cidr" {
-  type = string
-  description = "The cidr for the subnetwork this module will create or an existing subnet"
-  default = "10.128.0.0/9"
 }
 
 variable incoming_ssl_cidrs {
@@ -24,7 +17,6 @@ variable incoming_ssl_cidrs {
 variable "public_ip" {
   type = string
   description = "The public IP address to assign to the controller"
-  default = ""
 }
 
 variable "controller_name" {
