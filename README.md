@@ -85,9 +85,9 @@ terraform init
 terraform apply
 ```
 
-### 4. Build the Controller VM on Google Cloud
+### 4. Build and Initialize the Aviatrix Controller
 
-**build_controller.tf**
+**main.tf**
 ```hcl
 provider "google" {
   project = "<< project id >>"
@@ -95,114 +95,20 @@ provider "google" {
   zone    = "<< GCloud zone to launch resources >>"
 }
 
-module "aviatrix_controller_build" {
-  source             = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
-  incoming_ssl_cidrs = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
-  subnet_cidr        = "10.128.0.0/9"
-  // please only use lower case letters, numbers and hyphens in the controller_name
-  controller_name    = "<< your Aviatrix Controller name >>"
-}
-
-output "avx_controller_public_ip" {
-  value = module.aviatrix_controller_build.public_ip
-}
-
-output "avx_controller_private_ip" {
-  value = module.aviatrix_controller_build.private_ip
-}
-
-terraform {
-  required_providers{
-    google {
-      source = "hashicorp/google"
-      version = "<< Google Terraform provider version >>"
-    }
-  }
-}
-```
-*Execute*
-```shell
-cd aviatrix_controller_build
-terraform init
-terraform apply
-cd ..
-```
-### 5. Initialize the Controller
-
-**controller_init.tf**
-```hcl
-provider "google" {
-  project = "<< project id >>"
-  region  = "<< GCloud region to launch resources >>"
-  zone    = "<< GCloud zone to launch resources >>"
-}
-
-module "aviatrix_controller_initialize" {
-  source                              = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-initialize"
-  avx_controller_public_ip            = "<< public ip address of the Aviatrix Controller >>"
-  avx_controller_private_ip           = "<< private ip address of the Aviatrix Controller >>"
-  avx_controller_admin_email          = "<< your admin email address for the Aviatrix Controller >>"
-  avx_controller_admin_password       = "<< your admin password for the Aviatrix Controller >>"
-  gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
+module "aviatrix-controller-gcp" {
+  source = "mlin-aviatrix/controller-gcp"
   access_account_name                 = "<< your account name mapping to your GCloud account >>"
+  aviatrix_controller_admin_email     = "<< your admin email address for the Aviatrix Controller >>"
+  aviatrix_controller_admin_password  = "<< your admin password for the Aviatrix Controller >>"
   aviatrix_customer_id                = "<< your customer license id >>"
-  controller_version                  = "<< desired controller version. defaults to 'latest' >>"
-}
-
-terraform {
-  required_providers{
-    google {
-      source = "hashicorp/google"
-      version = "<< Google Terraform provider version >>"
-    }
-  }
-}
-```
-*Execute*
-```shell
-cd aviatrix_controller_initialize
-terraform init
-terraform apply
-cd ..
-```
-
-### Putting it all together
-The controller buildup and initialization can be done using a single terraform file.
-```hcl
-provider "google" {
-  project = "<< project id >>"
-  region  = "<< GCloud region to launch resources >>"
-  zone    = "<< GCloud zone to launch resources >>"
-}
-
-module "aviatrix_controller_build" {
-  source             = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-build"
-  incoming_ssl_cidrs = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
-  subnet_cidr        = "10.128.0.0/9"
-  // please only use lower case letters, numbers and hyphens in the controller_name
-  controller_name    = "<< your Aviatrix Controller name >>"
-}
-
-module "aviatrix_controller_initialize" {
-  source                              = "github.com/AviatrixSystems/terraform-module-gcp.git//aviatrix-controller-initialize"
-  avx_controller_public_ip            = module.aviatrix-controller-build.public_ip
-  avx_controller_private_ip           = module.aviatrix-controller-build.private_ip
-  avx_controller_admin_email          = "<< your admin email address for the Aviatrix Controller >>"
-  avx_controller_admin_password       = "<< your admin password for the Aviatrix Controller >>"
   gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
-  access_account_name                 = "<< your account name mapping to your GCloud account >>"
-  aviatrix_customer_id                = "<< your customer license id >>"
-  controller_version                  = "<< desired controller version. defaults to 'latest' >>"
-}
-
-output "avx_controller_public_ip" {
-  value = module.aviatrix_controller_build.public_ip
+  incoming_ssl_cidrs                  = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
 }
 
 terraform {
   required_providers{
     google {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "<< Google Terraform provider version >>"
     }
   }
