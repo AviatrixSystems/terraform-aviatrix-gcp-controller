@@ -1,9 +1,3 @@
-variable "image" {
-  type = string
-  description = "The Google compute image to build the Aviatrix Controller"
-  default = ""
-}
-
 variable "network" {
   type = string
   description = "The network to attach to the Aviatrix Controller"

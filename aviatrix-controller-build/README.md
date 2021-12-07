@@ -11,7 +11,6 @@ components created include:
 This Terraform module will create any of these optional components if they are not provided.
 
 * An existing Google Compute Network with port 443 open for https
-* An existing Google Compute Image with the Aviatrix Controller image
 * A Google Compute Public IP Address
 
 ### Usage:
@@ -33,7 +32,6 @@ module "aviatrix-controller-build" {
   source              = "github.com/AviatrixSysmtes/terraform-module-gcp.git//aviatrix-controller-build"
   network             = "<<< insert network name or self_link here >>>"
   subnetwork          = "<<< insert subnetwork name or self_link here  >>>"
-  image               = "<<< insert image name or self_link here >>>"
   public_ip           = "<<< insert IP address here, ie. 1.1.1.1>>>"
   incoming_ssl_cidrs  = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
 }
@@ -52,10 +50,6 @@ module "aviatrix-controller-build" {
 - **subnet_cidr**
 
   The CIDR for the Google Subnetwork that will be created. Must be empty if **network** is set. Default value is "10.128.0.0/9".
-
-- **image**
-
-  The name or self_link of an existing Google compute image with the Aviatrix Controller Image. If not set, a Google Compute Image with the Aviatrix Controller image will be created.
 
 - **public_ip**
 
