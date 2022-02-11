@@ -13,7 +13,7 @@ To create a public IP Address:
 
 ```hcl
 module "aviatrix-controller-ip-address" {
-  source = "mlin-aviatrix/controller-gcp/aviatrix//modules/aviatrix-controller-ip-address"
+  source = "AviatrixSystems/gcp-controller/aviatrix//modules/aviatrix-controller-ip-address"
 }
 ```
 

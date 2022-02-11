@@ -96,7 +96,7 @@ provider "google" {
 }
 
 module "aviatrix-controller-gcp" {
-  source = "mlin-aviatrix/controller-gcp"
+  source                              = "AviatrixSystems/gcp-controller/aviatrix"
   access_account_name                 = "<< your account name mapping to your GCloud account >>"
   aviatrix_controller_admin_email     = "<< your admin email address for the Aviatrix Controller >>"
   aviatrix_controller_admin_password  = "<< your admin password for the Aviatrix Controller >>"

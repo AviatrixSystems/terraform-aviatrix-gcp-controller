@@ -12,7 +12,7 @@ To create an Aviatrix Controller:
 
 ```hcl
 module "aviatrix-controller-build" {
-  source              = "mlin-aviatrix/controller-gcp//modules/aviatrix-controller-build"
+  source              = "AviatrixSystems/gcp-controller/aviatrix//modules/aviatrix-controller-build"
   network             = "<<< insert network name or self_link here >>>"
   subnetwork          = "<<< insert subnetwork name or self_link here >>>"
   public_ip           = "<<< insert public IP address here, ie. 1.1.1.1 >>>"
@@ -20,21 +20,6 @@ module "aviatrix-controller-build" {
 }
 ```
 
-
-<<<<<<< HEAD
-To create an Aviatrix Controller with existing components:
-```hcl
-module "aviatrix-controller-build" {
-  source              = "github.com/AviatrixSysmtes/terraform-module-gcp.git//aviatrix-controller-build"
-  network             = "<<< insert aviatrix-controller-network name or self_link here >>>"
-  subnetwork          = "<<< insert subnetwork name or self_link here  >>>"
-  public_ip           = "<<< insert IP address here, ie. 1.1.1.1>>>"
-  incoming_ssl_cidrs  = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
-}
-```
-
-=======
->>>>>>> 108dd12 (Update README documentation for submodules)
 ### Variables
 
 - **network**
@@ -43,15 +28,7 @@ module "aviatrix-controller-build" {
 
 - **subnetwork**
 
-<<<<<<< HEAD
-  The name or self_link of an existing Google Compute Subnetwork of the given **network**. **subnetwork** must be empty if **network** is not provided.
-
-- **subnet_cidr**
-
-  The CIDR for the Google Subnetwork that will be created. Must be empty if **network** is set. Default value is "10.128.0.0/9".
-=======
   The name or self_link of an existing Google Compute Subnetwork of the given **network**.
->>>>>>> 108dd12 (Update README documentation for submodules)
 
 - **public_ip**
 

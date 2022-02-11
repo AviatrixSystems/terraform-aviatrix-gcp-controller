@@ -13,7 +13,7 @@ To create the network and subnetwork:
 
 ```hcl
 module "aviatrix-controller-network" {
-  source              = "mlin-aviatrix/controller-gcp//modules/aviatrix-controller-network"
+  source              = "AviatrixSystems/gcp-controller/aviatrix//modules/aviatrix-controller-network"
   subnet_cidr         = "10.128.0.0/16"
 }
 ```

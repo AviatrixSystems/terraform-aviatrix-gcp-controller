@@ -10,7 +10,7 @@ To initialize an Aviatrix Controller:
 
 ```hcl
 module "aviatrix_controller_initialize" {
-  source                              = "mlin-aviatrix/controller-gcp/aviatrix//modules/aviatrix-controller-initialize"
+  source                              = "AviatrixSystems/gcp-controller/aviatrix//modules/aviatrix-controller-initialize"
   avx_controller_public_ip            = "<<< Public IP Address of the Aviatrix Controller >>>"
   avx_controller_private_ip           = "<<< Private IP Address of the Aviatrix Controller >>>"
   avx_controller_admin_email          = "<< your admin email address for the Aviatrix Controller >>"
