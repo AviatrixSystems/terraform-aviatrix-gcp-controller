@@ -1,5 +1,5 @@
 variable "ip_address_name" {
-  type = string
+  type        = string
   description = "Name of the compute address to be created"
-  default = "aviatrix-controller-address"
+  default     = "aviatrix-controller-address"
 }
