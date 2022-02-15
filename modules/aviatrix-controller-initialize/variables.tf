@@ -25,7 +25,7 @@ variable "gcloud_project_credentials_filepath" {
 
 variable "access_account_name" {
   type        = string
-  description = "aviatirx controller access account name"
+  description = "aviatrix controller access account name"
 }
 
 variable "controller_version" {
