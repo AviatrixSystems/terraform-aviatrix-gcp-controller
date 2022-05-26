@@ -48,7 +48,7 @@ variable incoming_ssl_cidrs {
 
 variable "network_name" {
   type        = string
-  description = "Name of the network to be created"
+  description = "Name of the network to be created or an existing network"
   default     = "aviatrix-controller-network"
 }
 
@@ -72,6 +72,12 @@ variable "subnet_cidr" {
 
 variable "subnet_name" {
   type        = string
-  description = "Name of the subnetwork to be created"
+  description = "Name of the subnetwork to be created or an existing subnetwork"
   default     = "aviatrix-controller-subnetwork"
+}
+
+variable "use_existing_network" {
+  type        = bool
+  description = "Whether to use an existing network"
+  default     = false
 }
