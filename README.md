@@ -86,7 +86,6 @@ terraform apply
 ```
 
 ### 4. Build and Initialize the Aviatrix Controller
-
 **main.tf**
 ```hcl
 provider "google" {
@@ -103,6 +102,43 @@ module "aviatrix-controller-gcp" {
   aviatrix_customer_id                = "<< your customer license id >>"
   gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
   incoming_ssl_cidrs                  = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
+}
+
+terraform {
+  required_providers{
+    google {
+      source  = "hashicorp/google"
+      version = "<< Google Terraform provider version >>"
+    }
+  }
+}
+```
+*Execute*
+```shell
+terraform init
+terraform apply
+```
+
+### 4b. Build and Initialize the Aviatrix Controller from an existing network
+**main.tf**
+```hcl
+provider "google" {
+  project = "<< project id >>"
+  region  = "<< GCloud region to launch resources >>"
+  zone    = "<< GCloud zone to launch resources >>"
+}
+
+module "aviatrix-controller-gcp" {
+  source                              = "AviatrixSystems/gcp-controller/aviatrix"
+  access_account_name                 = "<< your account name mapping to your GCloud account >>"
+  aviatrix_controller_admin_email     = "<< your admin email address for the Aviatrix Controller >>"
+  aviatrix_controller_admin_password  = "<< your admin password for the Aviatrix Controller >>"
+  aviatrix_customer_id                = "<< your customer license id >>"
+  gcloud_project_credentials_filepath = "<< absolute path to Google Cloud project credentials >>"
+  incoming_ssl_cidrs                  = ["<<< subnet CIDR >>>", "<<< CIDRs allowed for HTTPS access >>>"]
+  use_existing_network                = true
+  network_name                        = "<< name of existing network >>"
+  subnet_name                         = "<< name of existing subnet >>"
 }
 
 terraform {

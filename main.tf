@@ -7,6 +7,7 @@ terraform {
 }
 
 module "aviatrix-controller-network" {
+  count  = var.use_existing_network ? 0 : 1
   source = "./modules/aviatrix-controller-network"
 
   network_name = var.network_name
@@ -18,11 +19,21 @@ module "aviatrix-controller-ip-address" {
   source = "./modules/aviatrix-controller-ip-address"
 }
 
+data "google_compute_network" "controller_network" {
+  count = var.use_existing_network ? 1 : 0
+  name  = var.network_name
+}
+
+data "google_compute_subnetwork" "controller_subnet" {
+  count = var.use_existing_network ? 1 : 0
+  name  = var.subnet_name
+}
+
 module "aviatrix-controller-build" {
   source = "./modules/aviatrix-controller-build"
 
-  network                 = module.aviatrix-controller-network.network
-  subnetwork              = module.aviatrix-controller-network.subnetwork
+  network                 = var.use_existing_network ? data.google_compute_network.controller_network[0].self_link : module.aviatrix-controller-network[0].network
+  subnetwork              = var.use_existing_network ? data.google_compute_subnetwork.controller_subnet[0].self_link : module.aviatrix-controller-network[0].subnetwork
   public_ip               = module.aviatrix-controller-ip-address.public_ip
   incoming_ssl_cidrs      = var.incoming_ssl_cidrs
   controller_name         = var.controller_name
