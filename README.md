@@ -4,7 +4,7 @@
 This Terraform module allows you to launch the Aviatrix Controller and create the Aviatrix access account connecting to the Controller in Google Cloud Platform.
 
 ## Prerequisites
-1. [Terraform 0.13](https://www.terraform.io/downloads.html) - execute terraform files
+1. [Terraform](https://www.terraform.io/downloads.html) - execute terraform files
 2. [Google Cloud command-line interface (GCloud CLI)](https://cloud.google.com/sdk/docs/install) - GCloud authentication
 3. [Python3](https://www.python.org/downloads/) - execute `aviatrix_controller_init.py` python scripts
 
@@ -37,7 +37,7 @@ gcloud auth application-default login
 ```
 This command will open the default browser and load Google Cloud sign in page
 
-#### 2b. Using a Service Account 
+#### 2b. Using a Service Account
 Alternatively, a Google Cloud Service Account can be used with Terraform to authenticate. Download the JSON key file from an existing Service Account or from a newly created one. Supply the key to Terraform using the `GOOGLE_APPLICATION_CREDENTIALS` environment variable.
 ```shell
 export GOOGLE_APPLICATION_CREDENTIALS={{path to key file}}
@@ -71,10 +71,10 @@ resource google_project_service "compute_service" {
 }
 
 terraform {
-  required_providers{
-    google {
+  required_providers {
+    google = {
       source  = "hashicorp/google"
-      version = "<< Google Terraform provider version >>"
+      version = ">= 4.0"
     }
   }
 }
@@ -86,6 +86,12 @@ terraform apply
 ```
 
 ### 4. Build and Initialize the Aviatrix Controller
+
+#### 4a. Build and Initialize the Aviatrix Controller from scratch
+
+NOTE: `gcloud project_credentials_filepath` needs to point to a service account key. See
+https://docs.aviatrix.com/HowTos/CreateGCloudAccount.html for more information.
+
 **main.tf**
 ```hcl
 provider "google" {
@@ -96,7 +102,7 @@ provider "google" {
 
 module "aviatrix-controller-gcp" {
   source                              = "AviatrixSystems/gcp-controller/aviatrix"
-  access_account_name                 = "<< your account name mapping to your GCloud account >>"
+  access_account_name                 = "<< Aviatrix controller account name to associate with your GCloud account. e.g. gcp_admin >>"
   aviatrix_controller_admin_email     = "<< your admin email address for the Aviatrix Controller >>"
   aviatrix_controller_admin_password  = "<< your admin password for the Aviatrix Controller >>"
   aviatrix_customer_id                = "<< your customer license id >>"
@@ -105,10 +111,10 @@ module "aviatrix-controller-gcp" {
 }
 
 terraform {
-  required_providers{
-    google {
+  required_providers {
+    google = {
       source  = "hashicorp/google"
-      version = "<< Google Terraform provider version >>"
+      version = ">= 4.0"
     }
   }
 }
@@ -119,7 +125,7 @@ terraform init
 terraform apply
 ```
 
-### 4b. Build and Initialize the Aviatrix Controller from an existing network
+#### 4b. Build and Initialize the Aviatrix Controller from an existing network
 **main.tf**
 ```hcl
 provider "google" {
@@ -130,7 +136,7 @@ provider "google" {
 
 module "aviatrix-controller-gcp" {
   source                              = "AviatrixSystems/gcp-controller/aviatrix"
-  access_account_name                 = "<< your account name mapping to your GCloud account >>"
+  access_account_name                 = "<< Aviatrix controller account name to associate with your GCloud account. e.g. gcp_admin >>"
   aviatrix_controller_admin_email     = "<< your admin email address for the Aviatrix Controller >>"
   aviatrix_controller_admin_password  = "<< your admin password for the Aviatrix Controller >>"
   aviatrix_customer_id                = "<< your customer license id >>"
@@ -142,10 +148,10 @@ module "aviatrix-controller-gcp" {
 }
 
 terraform {
-  required_providers{
-    google {
+  required_providers {
+    google = {
       source  = "hashicorp/google"
-      version = "<< Google Terraform provider version >>"
+      version = ">= 4.0"
     }
   }
 }
