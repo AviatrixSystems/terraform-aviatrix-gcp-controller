@@ -42,3 +42,9 @@ variable "controller_machine_type" {
   description = "The machine type to create the Aviatrix Controller"
   default     = "e2-standard-2"
 }
+
+variable "network_tags" {
+  type        = set(string)
+  description = "Compute instance network tags"
+  default     = ["controller"]
+}
