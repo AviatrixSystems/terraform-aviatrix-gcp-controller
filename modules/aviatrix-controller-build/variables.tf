@@ -42,3 +42,9 @@ variable "controller_machine_type" {
   description = "The machine type to create the Aviatrix Controller"
   default     = "e2-standard-2"
 }
+
+variable "firewall_name" {
+  type        = string
+  description = "Name of the firewall to be created"
+  default     = "aviatrix-controller-firewall"
+}

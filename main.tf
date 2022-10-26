@@ -17,6 +17,7 @@ module "aviatrix-controller-network" {
 
 module "aviatrix-controller-ip-address" {
   source = "./modules/aviatrix-controller-ip-address"
+  ip_address_name = var.ip_address_name
 }
 
 data "google_compute_network" "controller_network" {
@@ -35,6 +36,7 @@ module "aviatrix-controller-build" {
   network                 = var.use_existing_network ? data.google_compute_network.controller_network[0].self_link : module.aviatrix-controller-network[0].network
   subnetwork              = var.use_existing_network ? data.google_compute_subnetwork.controller_subnet[0].self_link : module.aviatrix-controller-network[0].subnetwork
   public_ip               = module.aviatrix-controller-ip-address.public_ip
+  firewall_name           = var.firewall_name
   incoming_ssl_cidrs      = var.incoming_ssl_cidrs
   controller_name         = var.controller_name
   service_account_email   = var.service_account_email
