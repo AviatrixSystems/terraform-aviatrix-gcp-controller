@@ -42,3 +42,9 @@ variable "controller_machine_type" {
   description = "The machine type to create the Aviatrix Controller"
   default     = "e2-standard-2"
 }
+
+variable "image" {
+  type = string
+  description = "The image from which to initialize this disk"
+  default = "aviatrix-public/avx-controller-gcp-2022-07-20"
+}
