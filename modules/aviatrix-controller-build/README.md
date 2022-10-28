@@ -58,6 +58,10 @@ module "aviatrix-controller-build" {
 
   List of CIDRs allowed for HTTPS access to the Aviatrix Controller.
 
+- **image**
+
+  The image from which to initialize this disk. Default value: "aviatrix-public/avx-controller-gcp-2022-07-20".
+
 - **network_tags**
 
   A set of compute instance network tags. Default: ["controller"].
