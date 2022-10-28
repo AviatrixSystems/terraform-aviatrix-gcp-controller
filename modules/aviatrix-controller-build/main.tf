@@ -1,6 +1,7 @@
 resource "google_compute_instance" "controller" {
   name         = var.controller_name
   machine_type = var.controller_machine_type
+  tags         = var.network_tags
 
   boot_disk {
     initialize_params {
@@ -24,9 +25,9 @@ resource "google_compute_instance" "controller" {
 }
 
 resource "google_compute_firewall" "controller_firewall" {
-  name    = var.firewall_name
-  network = var.network
-
+  name          = var.firewall_name
+  network       = var.network
+  target_tags   = google_compute_instance.controller.tags
   source_ranges = var.incoming_ssl_cidrs
 
   allow {

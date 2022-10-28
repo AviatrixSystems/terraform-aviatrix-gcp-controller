@@ -47,4 +47,9 @@ variable "firewall_name" {
   type        = string
   description = "Name of the firewall to be created"
   default     = "aviatrix-controller-firewall"
+
+variable "network_tags" {
+  type        = set(string)
+  description = "Compute instance network tags"
+  default     = ["controller"]
 }
