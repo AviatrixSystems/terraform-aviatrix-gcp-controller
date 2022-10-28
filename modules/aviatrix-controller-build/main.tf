@@ -5,7 +5,7 @@ resource "google_compute_instance" "controller" {
 
   boot_disk {
     initialize_params {
-      image = "aviatrix-public/avx-controller-gcp-2022-07-20"
+      image = var.image
     }
   }
 

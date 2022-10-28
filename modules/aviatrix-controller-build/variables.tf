@@ -43,6 +43,11 @@ variable "controller_machine_type" {
   default     = "e2-standard-2"
 }
 
+variable "image" {
+  type = string
+  description = "The image from which to initialize this disk"
+  default = "aviatrix-public/avx-controller-gcp-2022-07-20"
+
 variable "network_tags" {
   type        = set(string)
   description = "Compute instance network tags"
