@@ -81,3 +81,15 @@ variable "use_existing_network" {
   description = "Whether to use an existing network"
   default     = false
 }
+
+variable "ip_address_name" {
+  type        = string
+  description = "Name of the compute address to be created"
+  default     = "aviatrix-controller-address"
+}
+
+variable "firewall_name" {
+  type        = string
+  description = "Name of the firewall to be created"
+  default     = "aviatrix-controller-firewall"
+}

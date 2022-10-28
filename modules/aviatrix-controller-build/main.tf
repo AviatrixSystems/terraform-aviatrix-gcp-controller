@@ -25,7 +25,7 @@ resource "google_compute_instance" "controller" {
 }
 
 resource "google_compute_firewall" "controller_firewall" {
-  name          = "aviatrix-controller-firewall"
+  name          = var.firewall_name
   network       = var.network
   target_tags   = google_compute_instance.controller.tags
   source_ranges = var.incoming_ssl_cidrs

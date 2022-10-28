@@ -50,6 +50,10 @@ module "aviatrix-controller-build" {
 
   The machine type to create the Aviatrix Controller. If not set, defaults to "e2-standard-2".
 
+- **firewall_name**
+
+  Name of the firewall to be created. Default value: "aviatrix-controller-firewall".
+
 - **incoming_ssl_cidrs**
 
   List of CIDRs allowed for HTTPS access to the Aviatrix Controller.
