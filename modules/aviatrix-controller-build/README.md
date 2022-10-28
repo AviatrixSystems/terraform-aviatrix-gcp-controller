@@ -54,6 +54,10 @@ module "aviatrix-controller-build" {
 
   List of CIDRs allowed for HTTPS access to the Aviatrix Controller.
 
+- **network_tags**
+
+  A set of compute instance network tags. Default: ["controller"].
+
 ### Outputs
 
 - **private_ip**
