@@ -36,6 +36,8 @@ module "aviatrix-controller-build" {
   network                 = var.use_existing_network ? data.google_compute_network.controller_network[0].self_link : module.aviatrix-controller-network[0].network
   subnetwork              = var.use_existing_network ? data.google_compute_subnetwork.controller_subnet[0].self_link : module.aviatrix-controller-network[0].subnetwork
   public_ip               = module.aviatrix-controller-ip-address.public_ip
+  image                   = var.image
+  network_tags            = var.network_tags
   firewall_name           = var.firewall_name
   incoming_ssl_cidrs      = var.incoming_ssl_cidrs
   controller_name         = var.controller_name

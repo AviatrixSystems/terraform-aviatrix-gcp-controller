@@ -93,3 +93,15 @@ variable "firewall_name" {
   description = "Name of the firewall to be created"
   default     = "aviatrix-controller-firewall"
 }
+
+variable "image" {
+  type        = string
+  description = "The image from which to initialize this disk"
+  default     = "aviatrix-public/avx-controller-gcp-2022-07-20"
+}
+
+variable "network_tags" {
+  type        = set(string)
+  description = "Compute instance network tags"
+  default     = ["controller"]
+}
