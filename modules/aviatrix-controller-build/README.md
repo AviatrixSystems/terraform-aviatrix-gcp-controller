@@ -60,7 +60,7 @@ module "aviatrix-controller-build" {
 
 - **image**
 
-  The image from which to initialize this disk. Default value: "aviatrix-public/avx-controller-gcp-2022-07-20".
+  The image from which to initialize this disk. Default value: "".
 
 - **network_tags**
 
