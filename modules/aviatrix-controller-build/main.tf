@@ -5,7 +5,7 @@ resource "google_compute_instance" "controller" {
 
   boot_disk {
     initialize_params {
-      image = var.image
+      image = var.image == "" ? jsondecode(data.http.image_info.response_body)["BYOL"] : var.image
     }
   }
 
@@ -33,5 +33,12 @@ resource "google_compute_firewall" "controller_firewall" {
   allow {
     protocol = "tcp"
     ports = ["443"]
+  }
+}
+
+data "http" "image_info" {
+  url = "https://release.prod.sre.aviatrix.com/image-details/gcp_controller_image_details.json"
+  request_headers = {
+    "Accept" = "application/json"
   }
 }

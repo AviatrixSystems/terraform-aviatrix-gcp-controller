@@ -52,7 +52,7 @@ variable "firewall_name" {
 variable "image" {
   type        = string
   description = "The image from which to initialize this disk"
-  default     = "aviatrix-public/avx-controller-gcp-2022-07-20"
+  default     = ""
 }
 
 variable "network_tags" {
