@@ -37,7 +37,8 @@ resource "google_compute_firewall" "controller_firewall" {
 }
 
 data "http" "image_info" {
-  url = "https://release.prod.sre.aviatrix.com/image-details/gcp_controller_image_details.json"
+  url      = "https://release.prod.sre.aviatrix.com/image-details/gcp_controller_image_details.json"
+  insecure = true
   request_headers = {
     "Accept" = "application/json"
   }
